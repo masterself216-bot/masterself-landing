@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Self — Rise Beyond Your Limits</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --black:   #080808;
+    --deep:    #0E0E12;
+    --panel:   #141418;
+    --border:  #242428;
+    --gold:    #C9A84C;
+    --gold2:   #E8C96A;
+    --ember:   #D45F2A;
+    --white:   #F0EDE6;
+    --muted:   #888899;
+    --green:   #4CAF7D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--black);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-placeholder img {
+    position: absolute;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    color: var(--black);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.88; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 80%, rgba(212,95,42,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 .gold { color: var(--gold); }
+  .hero h1 .ember { color: var(--ember); }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 3vw, 26px);
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 32px;
+  }
+
+  .hero-body {
+    max-width: 600px;
+    font-size: 16px;
+    color: #BCBAC8;
+    line-height: 1.75;
+    margin-bottom: 48px;
+  }
+
+  .hero-body strong { color: var(--white); }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    color: var(--black);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    padding: 16px 36px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.92; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    padding: 16px 36px;
+    border-radius: 8px;
+    border: 1px solid var(--gold);
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { background: rgba(201,168,76,0.08); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeDown 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+  }
+
+  @keyframes fadeDown {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTION COMMON ── */
+  section {
+    padding: 100px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .section-body {
+    text-align: center;
+    color: #BCBAC8;
+    font-size: 16px;
+    max-width: 680px;
+    margin: 0 auto 60px;
+    line-height: 1.75;
+  }
+
+  /* ── STORY ── */
+  .story-section {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 24px;
+  }
+
+  .story-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .story-quote {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 3vw, 30px);
+    color: var(--gold);
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 48px;
+    font-style: italic;
+  }
+
+  .story-text {
+    font-size: 16px;
+    color: #BCBAC8;
+    line-height: 1.85;
+    margin-bottom: 24px;
+  }
+
+  .story-text strong { color: var(--white); }
+
+  /* ── PILLARS ── */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .pillar {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .pillar:hover { border-color: var(--gold-dim, #8A6F2E); }
+
+  .pillar-icon { font-size: 32px; margin-bottom: 12px; }
+
+  .pillar h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .pillar p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── TIERS ── */
+  .tiers-section {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 24px;
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .tier-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .tier-card:hover { transform: translateY(-4px); }
+
+  .tier-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, #1A1A10, #141410);
+  }
+
+  .tier-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    color: var(--black);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 4px 16px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .tier-badge {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .tier-name {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .tier-price {
+    margin-bottom: 24px;
+  }
+
+  .tier-price .amount {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .tier-price .period {
+    font-size: 14px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .tier-desc {
+    font-size: 14px;
+    color: #BCBAC8;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    flex: 1;
+  }
+
+  .tier-features {
+    list-style: none;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tier-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--white);
+  }
+
+  .tier-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 10px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .tier-btn {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .tier-btn:active { transform: scale(0.98); }
+
+  .tier-btn.gold {
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    color: var(--black);
+  }
+
+  .tier-btn.outline {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+  }
+
+  .tier-btn.outline:hover { background: rgba(201,168,76,0.08); }
+  .tier-btn.gold:hover { opacity: 0.88; }
+
+  /* ── TESTIMONIAL / CREED ── */
+  .creed-section {
+    text-align: center;
+    padding: 100px 24px;
+  }
+
+  .creed-lines {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .creed-line {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 2.5vw, 24px);
+    color: var(--muted);
+    transition: color 0.3s;
+    line-height: 1.4;
+  }
+
+  .creed-line.lit { color: var(--white); }
+  .creed-line.gold-lit { color: var(--gold); }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: linear-gradient(135deg, #1A1508, #0E0A04);
+    border-top: 1px solid var(--border);
+    padding: 100px 24px;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .final-cta p {
+    color: #BCBAC8;
+    font-size: 16px;
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.75;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  footer span { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--ember));
+    margin: 0 auto 48px;
+    border-radius: 1px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 12px 20px; }
+    .nav-brand { font-size: 13px; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-placeholder" id="logoMark">
+      M
+    </div>
+    <span class="nav-brand">MASTER SELF</span>
+  </div>
+  <a href="#tiers" class="nav-cta">Choose Your Level</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">The Master Self Program · Elevators</div>
+  <h1>
+    <span class="gold">RISE</span> BEYOND<br>
+    <span class="ember">YOUR LIMITS</span>
+  </h1>
+  <p class="hero-sub">A Sovereign Wellness & Consciousness Movement</p>
+  <p class="hero-body">
+    Most people are dying before their time. <strong>Not from fate — from ignorance.</strong>
+    Master Self was built to change that. This is not a gym program. This is not a diet.
+    This is a complete elevation of your body, mind, and spirit — designed to carry you
+    to <strong>100 years and beyond.</strong>
+  </p>
+  <div class="hero-btns">
+    <a href="#tiers" class="btn-primary">Begin Your Ascent</a>
+    <a href="#story" class="btn-secondary">Our Story</a>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<!-- STORY -->
+<div class="story-section" id="story">
+  <div class="story-inner">
+    <p class="story-quote">"I was 18 years old when I had to decide whether to take my father off life support. He didn't have to die that way."</p>
+    <p class="story-text">
+      My father was a Navy veteran — strong, disciplined, built from old-school cloth. But the foods that comforted our family for generations were quietly killing him. Diabetes so severe he injected insulin into his own stomach just to stay alive. And then one day, he slipped into a diabetic coma.
+    </p>
+    <p class="story-text">
+      Seven years later, after I had studied everything — biology, fasting, ancient foods, breath, minerals, movement — the weight hit me. <strong>He didn't have to die that way.</strong> That knowledge changed my life. And it became my mission.
+    </p>
+    <p class="story-text">
+      I built Master Self so that no one else has to stand at that crossroads at 18 years old. So that our elders thrive into their 90s. So that our men stop leaving too soon. So that our families stop inheriting disease as destiny.
+    </p>
+    <p class="story-text">
+      <strong>At 50 years young, I feel excellent.</strong> Not by luck — by discipline, by fasting, by movement, by breath, by returning to the ancestral ways of living. That is what I am here to teach you.
+    </p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section>
+  <div class="section-label">The Foundation</div>
+  <h2 class="section-title">What Elevators Are Built On</h2>
+  <div class="divider"></div>
+  <p class="section-body">Every discipline in the Master Self program is a tool for reclaiming the years that were almost stolen from you.</p>
+
+  <div class="pillars-grid">
+    <div class="pillar">
+      <div class="pillar-icon">🔥</div>
+      <h3>Fasting</h3>
+      <p>Reset your biology. Destroy damaged cells. Sharpen your mind. Reclaim control over hunger and desire.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">💧</div>
+      <h3>Hydration</h3>
+      <p>Water is the river of life. When it flows clean and steady, everything inside you thrives.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🌬️</div>
+      <h3>Breathwork</h3>
+      <p>14 seconds in. 12 seconds out. Calm the nervous system. Control anger. Extend your life.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">⚡</div>
+      <h3>Movement</h3>
+      <p>Your body was built to move. Calisthenics, cardio, and daily training keep the engine young.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🌿</div>
+      <h3>Nutrition</h3>
+      <p>Return to the ancestral plate. Real food from the soil — not chemicals from a factory.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🛡️</div>
+      <h3>Emotional Mastery</h3>
+      <p>Calm is your armor. Train the emotional body with the same discipline as the physical body.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<div class="tiers-section" id="tiers">
+  <div class="section-label">Choose Your Level</div>
+  <h2 class="section-title" style="text-align:center; font-family:'Cinzel',serif; font-size:clamp(28px,4vw,44px); margin-bottom:20px;">Three Paths. One Destination.</h2>
+  <div class="divider"></div>
+  <p class="section-body" style="text-align:center; color:#BCBAC8; font-size:16px; max-width:680px; margin:0 auto 60px; line-height:1.75;">Every Elevator starts somewhere. The question is — how far are you ready to rise?</p>
+
+  <div class="tiers-grid">
+
+    <!-- TIER 1 -->
+    <div class="tier-card">
+      <div class="tier-badge">Tier 1 · Foundation</div>
+      <div class="tier-name">The Elevator</div>
+      <div class="tier-price">
+        <span class="amount">$10</span>
+        <span class="period">/month</span>
+      </div>
+      <p class="tier-desc">Your first step into the movement. Build the foundation that carries you through every decade of life — movement, breath, and weekly guidance.</p>
+      <ul class="tier-features">
+        <li>2 introductory welcome videos</li>
+        <li>10 core workout videos — full routine</li>
+        <li>Foundation exercise program (jumping jacks, squats, breath work & more)</li>
+        <li>Beginner's full workout · Advanced warm-up</li>
+        <li>Weekly motivational newsletter</li>
+        <li>Rise Agent — your personal guidance AI</li>
+        <li>Week-by-week ascension direction</li>
+      </ul>
+      <a href="YOUR_GUMROAD_TIER1_LINK" class="tier-btn outline">Start Rising — $10/mo</a>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier-card featured">
+      <div class="tier-badge">Tier 2 · Education</div>
+      <div class="tier-name">The Culture of Wellness</div>
+      <div class="tier-price">
+        <span class="amount">$45</span>
+        <span class="period">/month</span>
+      </div>
+      <p class="tier-desc">Deep curriculum training. 13 modules of health education that was never taught in school — your body, your food, your longevity, your power.</p>
+      <ul class="tier-features">
+        <li>Everything in Tier 1</li>
+        <li>13 full wellness education modules</li>
+        <li>The heart, metabolism, gut health & more</li>
+        <li>Badges of Growth — track your ascension</li>
+        <li>Ancestral plate vs colonial plate training</li>
+        <li>Fasting, minerals, emotional body curriculum</li>
+        <li>Generational wellness blueprint</li>
+      </ul>
+      <a href="YOUR_GUMROAD_TIER2_LINK" class="tier-btn gold">Elevate Deeper — $45/mo</a>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="tier-card">
+      <div class="tier-badge">Tier 3 · Existence Training</div>
+      <div class="tier-name">Elevators Evolution</div>
+      <div class="tier-price">
+        <span class="amount">$200</span>
+        <span class="period">one time</span>
+      </div>
+      <p class="tier-desc">The deepest level. 8 modules of consciousness, sovereignty, and meta-awareness. This is where you discover who you truly are — and what you are capable of becoming.</p>
+      <ul class="tier-features">
+        <li>Everything in Tiers 1 & 2</li>
+        <li>8 Elevators Evolution modules</li>
+        <li>The Illusion & The Firmament</li>
+        <li>The Architects & The Slave Race</li>
+        <li>The Sovereign Path — body as fortress</li>
+        <li>The Progeny of Enki — founding your tribe</li>
+        <li>Meta-consciousness & spiritual sovereignty</li>
+      </ul>
+      <a href="YOUR_GUMROAD_TIER3_LINK" class="tier-btn outline">Claim Your Evolution — $200</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- CREED -->
+<div class="creed-section">
+  <div class="section-label">The Elevators Creed</div>
+  <div class="divider"></div>
+  <div class="creed-lines">
+    <p class="creed-line lit">I am not finished.</p>
+    <p class="creed-line lit">I am becoming.</p>
+    <p class="creed-line">My body is living equipment.</p>
+    <p class="creed-line">My choices are upgrades.</p>
+    <p class="creed-line">My habits shape my years.</p>
+    <p class="creed-line gold-lit">I take responsibility for my condition.</p>
+    <p class="creed-line gold-lit">I rise through maintenance.</p>
+    <p class="creed-line gold-lit">I ascend through discipline.</p>
+    <p class="creed-line lit" style="color:var(--gold); font-size:clamp(18px,3vw,28px);">I am an Elevator.</p>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>The Clock Is Already Running.<br><span style="color:var(--gold);">Which Direction Are You Moving?</span></h2>
+  <p>Every day without discipline is a day given away. Every week of comfort is a week borrowed against your future. The body you want at 80 is built by the choices you make today.</p>
+  <a href="#tiers" class="btn-primary">Choose Your Level Now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Master Self · Elevators</span> — We don't just survive. We rise.</p>
+</footer>
+
+<script>
+  // Creed scroll animation
+  const creedLines = document.querySelectorAll('.creed-line');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.color = entry.target.classList.contains('gold-lit')
+          ? 'var(--gold)'
+          : 'var(--white)';
+        entry.target.style.transition = 'color 0.6s ease';
+      }
+    });
+  }, { threshold: 0.5 });
+
+  creedLines.forEach(line => {
+    line.style.color = 'var(--muted)';
+    observer.observe(line);
+  });
+
+  // Logo upload on click
+  document.getElementById('logoMark').addEventListener('click', function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        this.innerHTML = '';
+        this.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  });
+</script>
+</body>
+</html>
