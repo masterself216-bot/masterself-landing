@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Culture of Wellness — Elevators Tier 2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#14110F;
+  --bg-card:#1C1712;
+  --bg-card-hover:#221B14;
+  --line:#332A20;
+  --ember:#C1541C;
+  --ember-bright:#E06A2C;
+  --gold:#C9A24B;
+  --text:#EDE6DA;
+  --text-dim:#9C9284;
+  --text-faint:#5C5448;
+  --locked:#2A2420;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  min-height:100vh;
+}
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(193,84,28,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 90% 10%, rgba(201,162,75,0.06), transparent 60%);
+  pointer-events:none; z-index:0;
+}
+.wrap{max-width:760px; margin:0 auto; padding:56px 24px 120px; position:relative; z-index:1;}
+
+/* HEADER */
+header{margin-bottom:48px;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--ember-bright); margin-bottom:14px; display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:''; width:16px; height:1px; background:var(--ember-bright);}
+h1{
+  font-family:'Fraunces',serif; font-weight:600; font-size:clamp(32px,5vw,46px);
+  letter-spacing:-0.01em; color:var(--text); margin-bottom:10px;
+}
+.subtitle{color:var(--text-dim); font-size:15.5px; max-width:52ch;}
+
+/* PROGRESS LEDGER */
+.ledger{
+  margin:36px 0 8px; padding:22px 20px;
+  background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+}
+.ledger-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px; flex-wrap:wrap; gap:6px;}
+.ledger-label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); letter-spacing:0.08em; text-transform:uppercase;}
+.ledger-week{font-family:'Fraunces',serif; font-size:20px; color:var(--gold);}
+.flames{display:flex; gap:6px; flex-wrap:wrap;}
+.flame{
+  width:100%; max-width:22px; aspect-ratio:1; border-radius:3px;
+  background:var(--locked); position:relative; flex:1 1 auto; min-width:14px;
+}
+.flame.lit{background:linear-gradient(160deg, var(--ember-bright), var(--ember));}
+.flame.current{outline:1.5px solid var(--gold); outline-offset:2px;}
+
+/* ONBOARD */
+.onboard{
+  background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+  padding:28px 24px; text-align:center; margin-top:20px;
+}
+.onboard p{color:var(--text-dim); margin-bottom:18px; font-size:14.5px;}
+button{
+  font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+  background:var(--ember); color:#fff; border:none; border-radius:6px;
+  padding:11px 22px; cursor:pointer; transition:background 0.15s;
+}
+button:hover{background:var(--ember-bright);}
+button.ghost{
+  background:transparent; border:1px solid var(--line); color:var(--text-dim);
+  font-weight:500;
+}
+button.ghost:hover{border-color:var(--ember-bright); color:var(--text);}
+
+/* MODULE LIST */
+.modules{margin-top:36px; display:flex; flex-direction:column; gap:12px;}
+.module{
+  background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+  overflow:hidden; transition:border-color 0.15s;
+}
+.module.unlocked{border-color:#3D3226;}
+.module.current{border-color:var(--ember);}
+.mod-head{
+  display:flex; align-items:center; gap:16px; padding:18px 20px; cursor:pointer;
+}
+.module.locked .mod-head{cursor:default;}
+.mod-num{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint);
+  width:52px; flex-shrink:0; letter-spacing:0.04em;
+}
+.module.unlocked .mod-num{color:var(--gold);}
+.mod-title-wrap{flex:1; min-width:0;}
+.mod-title{
+  font-family:'Fraunces',serif; font-size:17.5px; color:var(--text-faint);
+}
+.module.unlocked .mod-title{color:var(--text);}
+.mod-sub{font-size:12.5px; color:var(--text-faint); margin-top:2px;}
+.mod-status{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint); text-align:right; flex-shrink:0; white-space:nowrap;}
+.mod-status.done{color:var(--gold);}
+.mod-status.now{color:var(--ember-bright);}
+.chevron{width:9px; height:9px; border-right:1.5px solid var(--text-faint); border-bottom:1.5px solid var(--text-faint); transform:rotate(-45deg); transition:transform 0.2s; flex-shrink:0;}
+.module.open .chevron{transform:rotate(45deg);}
+
+.mod-body{max-height:0; overflow:hidden; transition:max-height 0.3s ease;}
+.mod-body-inner{padding:0 24px 30px; border-top:1px solid var(--line);}
+.ancestor{
+  font-family:'Fraunces',serif; font-style:italic; font-size:16.5px;
+  color:var(--gold); line-height:1.65; padding:22px 0 6px; max-width:60ch;
+}
+.mod-body-inner h3{
+  font-family:'Fraunces',serif; font-size:15px; color:var(--ember-bright);
+  margin:26px 0 10px; letter-spacing:0.01em;
+}
+.mod-body-inner p{color:#D8CFC0; font-size:14.5px; margin-bottom:12px; max-width:62ch;}
+.mod-body-inner ul{margin:0 0 14px 18px; color:#D8CFC0; font-size:14.5px;}
+.mod-body-inner li{margin-bottom:6px;}
+
+.creed{
+  background:rgba(201,162,75,0.06); border:1px solid rgba(201,162,75,0.25);
+  border-radius:8px; padding:18px 20px; margin:20px 0;
+}
+.creed p{font-family:'Fraunces',serif; font-style:italic; color:var(--gold); font-size:14.5px; margin:0; line-height:1.7;}
+
+.task-box{
+  background:rgba(193,84,28,0.07); border:1px solid rgba(193,84,28,0.28);
+  border-radius:8px; padding:18px 20px; margin:20px 0;
+}
+.task-box h4{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ember-bright); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;}
+.task-box label{display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--text); margin-bottom:10px; cursor:pointer;}
+.task-box input[type=checkbox]{margin-top:3px; accent-color:var(--ember);}
+
+.badge-row{display:flex; align-items:center; gap:14px; margin-top:22px; padding-top:20px; border-top:1px solid var(--line);}
+.badge-icon{
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  background:var(--locked); display:flex; align-items:center; justify-content:center;
+  font-size:18px; transition:all 0.2s;
+}
+.badge-icon.earned{background:radial-gradient(circle at 30% 30%, var(--gold), #8A6B28); box-shadow:0 0 14px rgba(201,162,75,0.4);}
+.badge-text{flex:1;}
+.badge-name{font-family:'Fraunces',serif; font-size:14.5px; color:var(--text);}
+.badge-hint{font-size:12px; color:var(--text-faint); margin-top:2px;}
+
+.locked-msg{padding:0 24px 26px; color:var(--text-faint); font-size:13px; border-top:1px solid var(--line); padding-top:16px;}
+
+footer{margin-top:60px; text-align:center;}
+.reset-link{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); background:none; border:none; text-decoration:underline; cursor:pointer; padding:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Elevators · Tier 2</div>
+    <h1>Culture of Wellness</h1>
+    <p class="subtitle">Thirteen weeks. One module unlocks each week, alongside your newsletter. Read it, live it, complete the week's task, and claim your badge.</p>
+  </header>
+
+  <div id="onboard-screen" class="onboard">
+    <p>This is your first visit. Let's mark the start of your thirteen weeks.</p>
+    <button id="begin-btn">Begin Week 1</button>
+  </div>
+
+  <div id="main-screen" style="display:none;">
+    <div class="ledger">
+      <div class="ledger-top">
+        <span class="ledger-label">Your Journey</span>
+        <span class="ledger-week" id="week-label">Week 1 of 13</span>
+      </div>
+      <div class="flames" id="flames"></div>
+    </div>
+
+    <div class="modules" id="modules"></div>
+
+    <footer>
+      <button class="reset-link" id="reset-btn">Reset my start date (testing only)</button>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+const START_KEY = 'ms_tier2_start';
+const PROGRESS_KEY = 'ms_tier2_progress';
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+const MODULES = [
+  {
+    num: 1,
+    title: "The Awakening",
+    sub: "You are not finished. You are becoming.",
+    ancestor: "There's an old story about a shipbuilder who launched his ship before it was finished — sails half-stitched, hull still being sealed, deckhands hammering as the waves already carried her out. People on the shore laughed. But the builder knew a secret: a ship only becomes seaworthy by sailing. If he waited for 'finished,' she'd rot in the harbor. Every one of us is that ship. We are not meant to wait until we're complete to start living well — we build ourselves while already underway.",
+    body: `
+      <h3>Why nothing alive stays still</h3>
+      <p>Look at your own family tree and you'll find two kinds of inheritance tangled together — gifts and burdens, often passed down in the same breath. The way your grandmother cooked with love. The way no one ever talked about stress, only carried it silently until it broke something. Strength on one side, worn-down hearts on the other.</p>
+      <p>Here's the truth this whole program stands on: the diseases that take our people early — heart attacks, strokes, diabetes, high blood pressure — are not a curse written into our blood. They are what happens when a body's basic upkeep gets skipped, quietly, for years. Nobody hands us a sickness. We build it, one skipped day at a time — and that means we can also build our way out.</p>
+      <h3>Every living thing runs on maintenance</h3>
+      <p>A garden left untended doesn't stay the same — it goes to weed. A river left unwatched doesn't stay clear — it silts up. Your body follows the same law. But unlike a garden, your body was built with its own repair crew already on staff, waiting for the right materials to do their work:</p>
+      <ul>
+        <li>Movement</li>
+        <li>Fasting — giving digestion a real rest</li>
+        <li>Water</li>
+        <li>Slow, deep breathing</li>
+        <li>Real, nutrient-dense food</li>
+        <li>Emotional steadiness — not bottled up, not runaway either</li>
+        <li>Sunlight</li>
+        <li>Rest</li>
+      </ul>
+      <p>Feed the crew what it needs, and your body upgrades itself while you sleep. Starve it of these things, and it declines quietly — until one day it isn't quiet anymore. This week is the moment you stop being a passenger in your own health and take the wheel.</p>
+      <h3>Sit with these questions</h3>
+      <ul>
+        <li>What part of my life have I let slide because I stopped paying attention to it?</li>
+        <li>What in my body needs care right now — be specific?</li>
+        <li>What's one habit I know I need to let go of?</li>
+        <li>Where do I feel the weakest, and why do I think that is?</li>
+        <li>What's one upgrade I'm willing to commit to this week?</li>
+      </ul>
+    `,
+    creed: "I am not finished. I am becoming. My body is living equipment. My choices are upgrades. My habits shape my years. I take responsibility for my condition. I rise through maintenance. I ascend through discipline. I am an Elevator — built to grow, built to heal, built to extend my life.",
+    task: [
+      "Write one sentence answering: 'This is why I will live to 100.'",
+      "Choose one habit to improve this week — name it specifically.",
+      "Share your commitment with the Elevators community."
+    ],
+    badgeName: "The Awareness Badge",
+    badgeHint: "Earned by completing this week's task"
+  },
+  {
+    num: 2,
+    title: "The Heart of Longevity",
+    sub: "Strength, flow, and the engine that carries you.",
+    ancestor: "Your heart doesn't just beat — it counts. Every pump is a message sent, a promise kept, a vote for one more second of life. Most people never stop to notice this. They treat their heart like background noise. But your heart is the one machine in your chest that never clocks out, and it deserves to be treated like the engine it is.",
+    body: `
+      <h3>A machine that never rests</h3>
+      <p>Here's a number worth sitting with: your heart moves about five liters of blood every single minute — even while you're resting on the couch. That's more blood moving through you in sixty seconds than most people drink in fluids all day. Now picture that engine running on a diet of grease, sugar, and stress for twenty years straight. And picture it instead running clean, hydrated, and exercised. Same engine — two very different lifespans.</p>
+      <h3>How the engine actually works</h3>
+      <p>Think of your arteries like the pipes under your kitchen sink. Fill them with grease and buildup, and the flow slows. Slow flow turns into pressure. Pressure turns into strain. And strain, left long enough, becomes the heart attack or stroke nobody saw coming — except the body had been warning about it for years.</p>
+      <p>The good news: this whole chain is preventable, and it starts with three simple habits.</p>
+      <ul>
+        <li><strong>Move daily</strong> — walking, squats, anything that makes your heart work a little. Movement keeps blood thin and pressure low.</li>
+        <li><strong>Hydrate constantly</strong> — dehydrated blood is thick blood, like trying to pump syrup instead of juice.</li>
+        <li><strong>Breathe slowly</strong> — a slow inhale and exhale literally slows your heartbeat and calms its electrical rhythm.</li>
+      </ul>
+      <h3>This week: The Heart Check</h3>
+      <ul>
+        <li>Walk fast enough to make breathing a little harder, 15–30 minutes daily.</li>
+        <li>Practice deep breathing on waking and before bed.</li>
+        <li>Drink water every 2 hours.</li>
+        <li>Add one cruciferous vegetable (broccoli, cabbage, kale) daily.</li>
+        <li>Stop eating late at night.</li>
+      </ul>
+      <p>Write one line: "This is how I will protect my heart."</p>
+    `,
+    creed: "My heart is not just an organ — it is my lifespan meter. Every beat is a promise. I treat it with respect, discipline, and maintenance, because longevity begins here.",
+    task: [
+      "Complete the Heart Check protocol for 7 days.",
+      "Drink water consistently and move daily.",
+      "Share one heart-health fact with someone in your circle."
+    ],
+    badgeName: "The Lifespan Engine Badge",
+    badgeHint: "Earned by completing the Heart Check"
+  },
+  {
+    num: 3,
+    title: "The Breath of Life",
+    sub: "The old manuscript that taught a man to breathe like water.",
+    ancestor: "Years ago, in a place with concrete walls and very little peace, I stood in a corner pressing my fingertips to the wall, breathing deep, trying to steady a storm that had been building in me for a long time. An older man — quiet, watchful — noticed. He said only, 'Come. Let me show you something.' In his cell, he unwrapped a manuscript so old and fragile it looked like pressed leaves. He wouldn't let me touch the pages himself; he turned them for me, slowly, revealing diagrams of breath moving through the body like water, not fire.",
+    body: `
+      <h3>The breath that became an anchor</h3>
+      <p>What he taught me that day was simple, almost embarrassingly so: breathe in for 14 seconds, and release for 12. No force. No rush. No panic. Just flow — belly, ribs, chest on the way in; chest, ribs, belly on the way out.</p>
+      <p>That breath became the thing that saved my peace. It steadied my reactions. It sharpened my mind. To this day, it still protects my heart, my patience, and my ability to lead instead of react.</p>
+      <h3>Why breath runs the whole system</h3>
+      <p>Most people breathe like they're being chased — short, shallow, panicked — and it keeps the whole body stuck in low-grade stress. But breath is actually a remote control:</p>
+      <ul>
+        <li>Breathe in slowly → heart rate drops, blood vessels relax, anger loosens its grip.</li>
+        <li>Breathe out slowly → stress exits the body, muscles unclench, clarity returns.</li>
+      </ul>
+      <p>Healing emotional wounds works the same way a workout builds muscle: you apply pressure (breath, reflection), you rest, and you come back stronger. That's not a metaphor — it's the actual mechanism.</p>
+      <h3>This week: The Breath Mastery Protocol</h3>
+      <ul>
+        <li>Practice 14-second inhale / 12-second exhale, three times a day.</li>
+        <li>Before reacting to anything emotional, take one slow breath first.</li>
+        <li>Two minutes of slow breathing before bed and after waking.</li>
+        <li>Journal: "What emotion did my breath help me control today?"</li>
+      </ul>
+    `,
+    creed: "If I can control my breath, I can control my heart. If I can control my heart, I can control my emotions. If I can control my emotions, I can guide my destiny. Breath is the first doorway to the 100-year life.",
+    task: [
+      "Complete the 7-day Breath Mastery Protocol.",
+      "Use breath to walk away from at least one argument.",
+      "Teach the 14–12 breath to someone in your circle."
+    ],
+    badgeName: "The Peacekeeper Badge",
+    badgeHint: "Earned through 7 days of breath practice"
+  },
+  {
+    num: 4,
+    title: "The River Within",
+    sub: "The itch that meant the river was moving again.",
+    ancestor: "One winter I stayed disciplined in the gym, but the weather kept me off the pavement for weeks. My legs stayed strong, but my heart and lungs weren't being pushed the way they needed. The day the weather finally broke, I ran outside like a man returning to an altar — pushing hard immediately, faster than I had all winter. And then I felt it: a deep itch, not on my skin but beneath it, in my thighs and lower back. I smiled. I knew exactly what it was — my capillaries, stiffened from disuse, bursting back open like small dams releasing pressure. My body was telling me: good, you're back, the river is moving again.",
+    body: `
+      <h3>Your blood is a river, and someone has to tend it</h3>
+      <p>Arteries carry life out. Veins carry it back home. Capillaries deliver it to every last cell. When that river flows, you feel young. When it clogs, you feel heavy — and eventually, disease visits.</p>
+      <p>Picture a village built along a river that fed every crop, every animal, every family for generations — until the people stopped clearing it. Trash piled up. Channels narrowed. Crops weakened, and so did the people, not from a curse, but from neglect of the thing keeping them alive. Then one person decided "enough," and started clearing debris alone. Others joined. The river returned — and so did the village's strength. That's the story every Elevator is living right now, just inside their own bloodstream.</p>
+      <h3>How blockage becomes disease</h3>
+      <ul>
+        <li>Narrowed river → rising pressure → high blood pressure.</li>
+        <li>Hardened debris → rigid vessels → plaque in the arteries.</li>
+        <li>Sudden stop → total shutdown → heart attack or stroke.</li>
+      </ul>
+      <h3>This week: The River Protocol</h3>
+      <ul>
+        <li>Hydrate every two hours to keep the flow loose.</li>
+        <li>Eat one cruciferous vegetable daily to cleanse the bloodstream.</li>
+        <li>Walk or jog 15–20 minutes to pump the river.</li>
+        <li>Practice long, slow breathing to relax the vessels.</li>
+        <li>Cut processed salt. Stretch daily.</li>
+      </ul>
+    `,
+    creed: "I honor my river. I clear my channels. I restore my flow. My blood is my life-force, and I protect it with discipline, so I can live strong for 100 years and beyond.",
+    task: [
+      "Follow the River Protocol for 7 days.",
+      "Track where in your body you feel the flow slow or return.",
+      "Teach someone in your circle what you learned about circulation."
+    ],
+    badgeName: "The Flow Keeper Badge",
+    badgeHint: "Earned by completing the River Protocol"
+  },
+  {
+    num: 5,
+    title: "The Fire Within",
+    sub: "The fire keeper who learned timing matters more than food.",
+    ancestor: "Imagine being the fire keeper of an old village, responsible for the one flame the whole community depends on. Throw too much wood on too often, and the fire chokes on itself, smoking instead of burning. Throw on the wrong kind of wood, and it burns dirty. Let it go out, and the village freezes. Your metabolism is that fire — and most of us were never taught how to tend it.",
+    body: `
+      <h3>Metabolism means "to change" — not "fast" or "slow"</h3>
+      <p>Everything you eat becomes something else inside you: energy, fat, fuel, inflammation, healing, or waste. Nobody ever sat most of us down and explained that the body is always in one of two modes — processing what's already inside, or receiving something new. Eat again before the first job is finished, and you're stacking more cars onto a highway that's already jammed. That congestion is where fatigue, cravings, and stored fat actually come from — often it's not that people eat badly, it's that they eat too often.</p>
+      <h3>Three flames, three jobs</h3>
+      <ul>
+        <li><strong>Carbs — quick fire.</strong> Simple sugars burn fast and crash hard. Complex carbs (lentils, oats, beans, whole fruit) burn slow and steady.</li>
+        <li><strong>Protein — repair fire.</strong> It rebuilds muscle and organs, but too much at once overworks the liver and kidneys.</li>
+        <li><strong>Fats — long fire.</strong> Healthy fats (avocado, nuts, olive oil) burn clean and steady. Fried, processed fats thicken the blood and strain the heart.</li>
+      </ul>
+      <p>When you fast — simply giving the fire a rest between feedings — the body uses the quiet to clean house: releasing stored fat, clearing waste, calming cravings, sharpening the mind. The body already knows how to heal. It just needs you to stop interrupting it.</p>
+      <h3>This week: The Metabolic Protocol</h3>
+      <ul>
+        <li>Eat within a 10-hour window (or shorter).</li>
+        <li>Drink water before every meal.</li>
+        <li>Choose complex carbs over simple ones.</li>
+        <li>Make vegetables the base of every plate.</li>
+        <li>No late-night eating. Add one lentil meal this week.</li>
+      </ul>
+    `,
+    creed: "My metabolism is not random. It is my fire, my rhythm, my responsibility. I feed my fire with discipline and prepare my body to live 100 years and beyond.",
+    task: [
+      "Complete the 7-day Metabolic Protocol.",
+      "Notice which meals leave you clear versus heavy.",
+      "Teach someone what 'metabolism means change' actually means."
+    ],
+    badgeName: "The Firekeeper Badge",
+    badgeHint: "Earned by completing the Metabolic Protocol"
+  },
+  {
+    num: 6,
+    title: "The Builders",
+    sub: "1993, a McDonald's uniform, and the awakening.",
+    ancestor: "Back in 1993 I worked at McDonald's, eating like tomorrow wasn't a consideration. The fries were addictive. The fried chicken kept calling. I told myself I was 'just hungry,' but what was really happening was simpler and darker: my body was being flooded with fast-burning sugar, over and over, and it was storing the overflow as belly fat, liver fat, and cravings that felt stronger than my own discipline. It took real honesty to admit the food was controlling me, not the other way around. That admission was the beginning of everything that came after.",
+    body: `
+      <h3>Three builders show up at your door every day</h3>
+      <p>Picture your body as a temple with three builders arriving at the gates daily. The first brings quick materials — fast, but the structure they build collapses just as fast. That's simple carbs: sugar, soda, white bread, fried food. The second builder brings strong beams that repair damage, but can't be overused — that's protein. The third brings long-lasting materials that hold everything together — that's healthy fats like olive oil, avocado, and nuts.</p>
+      <p>When the wrong builder shows up too often, the temple weakens. When the right ones show up in balance, it becomes something close to eternal.</p>
+      <h3>Simple vs. complex carbs</h3>
+      <p>Simple carbs (sugar, soda, fries, pastries) hit the bloodstream like gasoline on a fire — a fast burst, then a hard crash, then fat storage and cravings. Complex carbs (lentils, oats, sweet potatoes, cruciferous vegetables) burn slow, quiet cravings, and give sustained power — but even these need to be eaten with timing in mind, not endlessly.</p>
+      <h3>This week: The Builder Protocol</h3>
+      <ul>
+        <li>Swap one simple carb for a complex carb, daily.</li>
+        <li>Eat a lentil meal at least twice this week.</li>
+        <li>Add healthy fats to one meal a day. No fried food for 7 days.</li>
+        <li>Stop eating 2–3 hours before bed.</li>
+        <li>Notice: does each meal leave you heavy, or energized?</li>
+      </ul>
+    `,
+    creed: "I choose my builders with discipline. I fuel my body with purpose. I shape my future through every bite, and I prepare myself to live strong for 100 years and beyond.",
+    task: [
+      "Complete the 7-day Builder Protocol.",
+      "Identify which foods leave you clear versus tired or irritable.",
+      "Teach someone the difference between simple and complex carbs."
+    ],
+    badgeName: "The Builder's Badge",
+    badgeHint: "Earned by completing the Builder Protocol"
+  },
+  {
+    num: 7,
+    title: "Real Foods vs. Non-Foods",
+    sub: "The box that said 'not fit for human consumption.'",
+    ancestor: "Years ago, working a kitchen repair job, I moved a piece of equipment and noticed a cardboard box sitting on a pallet. The label stopped me cold: 'NOT FIT FOR HUMAN CONSUMPTION.' I looked inside — burritos. The same burritos being served to people every day. That was the day something opened in me. I realized institutions don't value bodies the way people value their own bodies. I took it to my brothers, we organized, we protested — and they scattered us to different facilities for speaking up. But the truth had already gotten in, and it never left. I promised myself that if I ever got the chance, I'd teach people how to protect themselves from a system that profits off their sickness.",
+    body: `
+      <h3>Products, not food</h3>
+      <p>Something only counts as food if it actually builds you, nourishes you, strengthens you. Anything chemically engineered, deep-fried in damaged oil, processed past recognition, and built to cause cravings instead of satisfaction isn't food — it's a <em>product</em>, designed to be cheap, addictive, and shelf-stable, not to serve a human body. And these products are placed everywhere our communities shop most: the corner store, the gas station, the cheapest restaurant on the block. That's not an accident. That's targeting.</p>
+      <h3>The two markets</h3>
+      <p>Picture walking into a giant marketplace. The first half is loud, bright, full of boxes and slogans and discounts — it sells pleasure. Deeper in, past the noise, is a quiet corner with vegetables, grains, nuts, roots — things that grew from the earth. That corner sells life. Most people are pulled toward the loud market because it speaks to cravings. This week, you learn to walk past it.</p>
+      <p>A simple test: if it grew from the earth, trust it. If it came from a factory, question it. If it never rots, don't put it inside you.</p>
+      <h3>This week: The Real-Food Protocol</h3>
+      <ul>
+        <li>Eliminate one consistent non-food item for the full week.</li>
+        <li>Eat one vegetable with every meal.</li>
+        <li>Drink only water or green tea. No fried food.</li>
+        <li>Read ingredient labels — choose items with fewer than 5.</li>
+        <li>After each meal, ask your body honestly how it feels.</li>
+      </ul>
+    `,
+    creed: "I choose real food. I honor my body. I reject the poisons that tried to shape my past. I build myself with life-giving nourishment and commit to a lifestyle that carries me to 100 years and beyond.",
+    task: [
+      "Complete the Real-Food Protocol for 7 days.",
+      "Eliminate one non-food item completely for the week.",
+      "Share your story with someone you care about."
+    ],
+    badgeName: "The Truth Seeker Badge",
+    badgeHint: "Earned by completing the Real-Food Protocol"
+  },
+  {
+    num: 8,
+    title: "The Second Brain",
+    sub: "What seven-day-old food taught me about my gut.",
+    ancestor: "During one of my seven-day water fasts, something happened that still amazes me: after breaking the fast with one clean meal, waste from seven days earlier exited my body almost immediately. It was proof of something most of us never consider — even when we think digestion is 'done,' food can sit trapped in the gut for days, quietly rotting, inflaming, clouding the mind. Fasting didn't starve me. It reset me. My cravings calmed, my skin cleared, my mind sharpened — and I realized what I'd always called hunger was often just habit, and what I'd called stress was often just an inflamed gut.",
+    body: `
+      <h3>The gut is a brain, not just a pipe</h3>
+      <p>The gut runs its own nervous system — millions of neurons with real decision-making power over mood, clarity, cravings, and immunity. A healthy gut lifts mood and sharpens focus. An inflamed gut makes you anxious, tired, unfocused, and craving things you can't explain. Your gut tells on you — it reveals the truth about how you've actually been living, whether you admit it or not.</p>
+      <h3>A garden, neglected and then restored</h3>
+      <p>Picture your gut as a garden. Every plant is a different organism doing its job. Dump chemicals and sugar on it long enough, and the garden dies — cravings spike, energy crashes, mood turns unstable. But clear the land through fasting, plant life back with vegetables, water it with hydration, and the garden grows strong again — and so do you.</p>
+      <h3>What feeds it, what destroys it</h3>
+      <p>Feeds it: broccoli, cabbage, kale, lentils, beans, green tea, berries, nuts. Destroys it: fried food, sugar, processed snacks, heavy late-night meals, artificial sweeteners.</p>
+      <h3>This week: The Gut Reset</h3>
+      <ul>
+        <li>Fast 14–16 hours daily.</li>
+        <li>Break your fast with vegetables or lentils, not sugar.</li>
+        <li>Drink only water and green tea. Cut processed food entirely.</li>
+        <li>Eat cruciferous vegetables daily.</li>
+        <li>Notice your gut after each meal — light, or heavy?</li>
+      </ul>
+    `,
+    creed: "I honor my gut. I listen to my second brain. I cleanse myself through discipline and use fasting as a tool for healing and clarity, preparing my body to live strong for 100 years and beyond.",
+    task: [
+      "Complete the 7-day Gut Reset.",
+      "Break each fast with clean, whole food.",
+      "Teach someone in your circle the power of fasting and vegetables."
+    ],
+    badgeName: "The Gut Guardian Badge",
+    badgeHint: "Earned by completing the Gut Reset"
+  },
+  {
+    num: 9,
+    title: "The Power Grid",
+    sub: "The night my own body forced me to listen.",
+    ancestor: "There was a season when I trained hard, fasted, studied, and pushed myself in every direction — but I wasn't sleeping right. Sharp in the morning, dull by afternoon. Strong in the gym, cloudy in the mind. One night, pushing through another late session, a heaviness washed over me — not fatigue from effort, but fatigue from imbalance. I sat down, closed my eyes, and understood: my body was shutting off its own circuit breakers, one by one — not to punish me, but to protect me. That was the night I learned sleep isn't rest. Sleep is repair.",
+    body: `
+      <h3>You are a city run on electricity</h3>
+      <p>Your brain is the command center. Your heart is the generator. Your nervous system is the wiring. Your hormones are the regulators, adjusting energy, mood, and hunger through the day. Sleep well, and the whole city resets overnight. Sleep poorly, and the lights dim across every building — mood, focus, cravings, immunity, all at once.</p>
+      <h3>The warrior who never rested</h3>
+      <p>Picture an ancient warrior who trained day and night, refusing to rest, admired by the whole village for his work ethic — until he collapsed mid-training, not because an enemy beat him, but because imbalance did. Only when he learned to treat sleep as part of the training, not separate from it, did he become unstoppable. That warrior is most of us at some point. We don't rest because we're lazy — we rest because we're preparing for something greater.</p>
+      <h3>This week: The Power Grid Protocol</h3>
+      <ul>
+        <li>Sleep at the same time every night.</li>
+        <li>No screens 30 minutes before bed.</li>
+        <li>Eat your last meal 2–3 hours before sleep.</li>
+        <li>Get morning light exposure. Practice slow breathing before bed.</li>
+        <li>Nap if needed — as recovery, not laziness.</li>
+      </ul>
+    `,
+    creed: "I protect my grid. I honor my rest. I let sleep rebuild me. I walk in rhythm, not chaos, and prepare my body to live strong for 100 years and beyond.",
+    task: [
+      "Follow the Power Grid Protocol for 7 days.",
+      "Track how consistent sleep changes your mood and focus.",
+      "Teach someone how sleep affects long-term health."
+    ],
+    badgeName: "The Power Keeper Badge",
+    badgeHint: "Earned by completing the Power Grid Protocol"
+  },
+  {
+    num: 10,
+    title: "Emotional Mastery",
+    sub: "The ancient breath that dissolved a storm of anger.",
+    ancestor: "There was a time anger lived inside me like a storm — built from pain, loss, and a life that demanded toughness instead of healing. I didn't learn control from a teacher; I learned it through fire, and eventually through breath. The same ancient method I learned from that old manuscript — 14 seconds in, 12 seconds out, no force, no rush — became more than calming. It became a way to dissolve anger instead of just controlling it. I stopped fighting my own storm and started breathing through it.",
+    body: `
+      <h3>Emotional wounds become physical illness</h3>
+      <p>Stress thickens blood. Anger tightens arteries. Sadness weakens immunity. Trauma shortens breath. We often ignore emotional wounds because we can't see them — but the body feels every one of them, and eventually shows the bill.</p>
+      <h3>The scar that made me stronger</h3>
+      <p>Think of emotional trauma like a deep cut. Ignore it, and it gets infected. Pick at it, and it bleeds forever. But clean it, protect it, breathe through the pain, and let it heal — and it becomes a scar that makes you stronger, not weaker. The same way you take on a hard workout willingly to build strength, you can face emotional wounds willingly to build the same kind of resilience. Pain isn't the enemy. Avoidance is.</p>
+      <h3>This week: The Emotional Protocol</h3>
+      <ul>
+        <li>Practice the 14-12 breath three times a day.</li>
+        <li>In arguments, respond with breath before reaction.</li>
+        <li>Journal one emotional trigger each night.</li>
+        <li>Drink water when angry — it calms the heart.</li>
+        <li>Remove yourself from one toxic habit or space this week.</li>
+      </ul>
+    `,
+    creed: "I master my emotions. I protect my peace. I choose discipline over reaction. I heal through breath and reflection, preparing my mind and body to live strong for 100 years and beyond.",
+    task: [
+      "Complete the 7-day Emotional Protocol.",
+      "Identify one old wound that still needs healing.",
+      "Teach someone the power of the 14-12 breath for emotion."
+    ],
+    badgeName: "The Peace Warrior Badge",
+    badgeHint: "Earned by completing the Emotional Protocol"
+  },
+  {
+    num: 11,
+    title: "The Electric Body",
+    sub: "The day drinking water felt like flipping a switch.",
+    ancestor: "For a long time I drank water the way most people do — when thirsty, when working out, because I knew it was 'good for me.' Then one day, mid-training, I noticed something deeper: hydrated, my heart didn't struggle, my breath stayed calm, my muscles stayed responsive. Everything felt connected. I realized I wasn't just drinking water — I was activating electricity. Water wasn't quenching thirst. It was powering a current running through everything I am.",
+    body: `
+      <h3>A body made of wires and current</h3>
+      <p>Your heart is an electrical pump — it can't fire properly without minerals like potassium and magnesium. Your nerves are wires that need water to carry a signal. Your brain is a command center that clouds instantly with dehydration. You are, quite literally, an electric being, which makes hydration a foundation, not an afterthought.</p>
+      <h3>A city that runs dry</h3>
+      <p>Picture your body as a city of lights and wires. With enough water, signals travel freely, streets stay clear, lights stay bright. Dry the city out, and wires misfire, lights flicker, traffic builds, communication breaks down. That's dehydration — not just thirst, but a weaker, foggier, more emotional version of you.</p>
+      <h3>This week: The Hydration Protocol</h3>
+      <ul>
+        <li>Drink water every 90 minutes.</li>
+        <li>Add leafy greens daily for minerals.</li>
+        <li>Drink green tea. Cut sugary drinks entirely.</li>
+        <li>Add a pinch of mineral salt to one bottle of water.</li>
+        <li>Use urine color as a simple feedback check.</li>
+      </ul>
+    `,
+    creed: "I am an electric being. I charge myself through hydration. I honor my minerals and fuel my heart, mind, and spirit with water and discipline, preparing to live strong for 100 years and beyond.",
+    task: [
+      "Complete the 7-day Hydration Protocol.",
+      "Notice how mood shifts with hydration level.",
+      "Teach someone how hydration powers the electric body."
+    ],
+    badgeName: "The Electric Keeper Badge",
+    badgeHint: "Earned by completing the Hydration Protocol"
+  },
+  {
+    num: 12,
+    title: "The Green Blueprint",
+    sub: "The week vegetables became medicine, not a side dish.",
+    ancestor: "There was one week I ate vegetables at every single meal — broccoli in the morning, lentils and bok choy midday, kale and cabbage at night. What happened shocked me: digestion became clean and effortless, my thoughts sharpened, my anger stayed calm, my cravings dropped, my heart felt steady. It felt like my whole internal world was unclogging and rebuilding itself. That's when I understood — vegetables aren't a side dish. They're medicine. And some of the ones we ignore most often carry some of the strongest cancer-fighting compounds found anywhere in nature.",
+    body: `
+      <h3>Nature's army</h3>
+      <p>Broccoli, cauliflower, cabbage, Brussels sprouts, kale, bok choy, collards, mustard greens — the brassica family — contain compounds like sulforaphane that are among the strongest cancer-fighting chemicals in the natural world. Eaten consistently, they weaken cancer cells, drop inflammation, detox the liver, and stabilize blood pressure. Paired with green tea, they build a protective shield around the entire system.</p>
+      <h3>The village that lived past 100</h3>
+      <p>Picture a village where everyone lives past 100 — not from miracles, but from culture. Every meal starts with greens. Every child learns the power of cabbage and lentils. Every elder drinks green tea in the morning light. Cancer barely enters that village, because the people are protected by habit, not luck. That's the culture this program is building.</p>
+      <h3>This week: The Green Protocol</h3>
+      <ul>
+        <li>Make 70% of every meal vegetables.</li>
+        <li>Eat brassicas daily. Drink green tea daily.</li>
+        <li>Include lentils in at least three meals.</li>
+        <li>Eliminate fried food completely.</li>
+        <li>Watch your body's response — energy, digestion, mood.</li>
+      </ul>
+    `,
+    creed: "I honor the foods that heal me. I use vegetables as medicine. I stand against disease with discipline and build a lifestyle that protects the generations after me.",
+    task: [
+      "Complete the 7-day Green Protocol.",
+      "Prepare at least three vegetable-based meals.",
+      "Teach someone why these vegetables matter for long-term health."
+    ],
+    badgeName: "The Green Warrior Badge",
+    badgeHint: "Earned by completing the Green Protocol"
+  },
+  {
+    num: 13,
+    title: "The Ascension Contract",
+    sub: "The night Elevators was born.",
+    ancestor: "There was a night I sat quietly, thinking of everyone I'd lost — family, brothers from the block, brothers from the penitentiary, women from my community who should still be here. Most of them weren't taken quickly. They were taken slowly — by food, by stress, by blood pressure, by diabetes, by a system that never once taught them to honor themselves. I remember thinking: if somebody doesn't step up and teach this in a way our people can actually understand, we'll keep losing generation after generation. That night, this program wasn't born as a course. It was born as a promise.",
+    body: `
+      <h3>The ancestor in the mirror</h3>
+      <p>When I look in the mirror, I imagine an ancestor standing behind me — someone who never got the chance to live to 100, who never had access to what I now know. They whisper: "Take what we could not finish, and elevate it." In that moment I understand I'm not doing this alone. I'm doing it for everyone who came before, and everyone still to come. I'm the bridge.</p>
+      <h3>The contract</h3>
+      <p>This is the declaration every Elevator carries forward, not as a hope, but as a lifestyle:</p>
+      <ul>
+        <li>I will treat my body as a sacred instrument — what I eat, drink, think, and breathe, I become.</li>
+        <li>I will reject the generational patterns that took my ancestors too soon. Heart disease, diabetes, and stroke end with me.</li>
+        <li>I will discipline myself for the sake of the next generation.</li>
+        <li>I will move, breathe, rest, and hydrate with intention, every day.</li>
+        <li>I will share what I've learned with my circle, my family, my community.</li>
+      </ul>
+      <h3>Closing this chapter</h3>
+      <p>This program doesn't end here — it begins here. Elevators don't graduate. They ascend, and keep building.</p>
+    `,
+    creed: "I am an Elevator. I rise when others fall. I heal when others break. I choose vegetables, water, breath, peace, strength, and clarity. I choose life. I choose legacy. I choose elevation.",
+    task: [
+      "Reflect on and internalize the full Ascension Contract.",
+      "Share this culture with at least one person outside the program.",
+      "Choose the Elevator identity as an ongoing way of living, not a finish line."
+    ],
+    badgeName: "The Royal Seal of Ascension",
+    badgeHint: "Earned by completing all 13 weeks"
+  },
+];
+
+function getStart(){ return localStorage.getItem(START_KEY); }
+function setStart(d){ localStorage.setItem(START_KEY, d); }
+function getProgress(){ try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; }catch(e){ return {}; } }
+function setProgress(p){ localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }
+
+function currentWeek(startTs){
+  const diff = Date.now() - startTs;
+  const wk = Math.floor(diff / WEEK_MS) + 1;
+  return Math.max(1, Math.min(13, wk));
+}
+
+function render(){
+  const start = getStart();
+  if(!start){
+    document.getElementById('onboard-screen').style.display = 'block';
+    document.getElementById('main-screen').style.display = 'none';
+    return;
+  }
+  document.getElementById('onboard-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+
+  const startTs = parseInt(start, 10);
+  const week = currentWeek(startTs);
+  document.getElementById('week-label').textContent = `Week ${week} of 13`;
+
+  const flamesEl = document.getElementById('flames');
+  flamesEl.innerHTML = '';
+  for(let i=1;i<=13;i++){
+    const f = document.createElement('div');
+    f.className = 'flame' + (i <= week ? ' lit' : '') + (i === week ? ' current' : '');
+    flamesEl.appendChild(f);
+  }
+
+  const progress = getProgress();
+  const modsEl = document.getElementById('modules');
+  modsEl.innerHTML = '';
+
+  MODULES.forEach(m => {
+    const unlocked = m.num <= week;
+    const isCurrent = m.num === week;
+    const done = !!progress[m.num];
+
+    const card = document.createElement('div');
+    card.className = 'module ' + (unlocked ? 'unlocked' : 'locked') + (isCurrent ? ' current' : '');
+
+    const nextUnlockDate = new Date(startTs + (m.num - 1) * WEEK_MS);
+    const daysLeft = Math.ceil((nextUnlockDate.getTime() - Date.now()) / (24*60*60*1000));
+
+    let statusHtml = '';
+    if(!unlocked){
+      statusHtml = `<span class="mod-status">unlocks in ${daysLeft}d</span>`;
+    } else if(done){
+      statusHtml = `<span class="mod-status done">✓ badge earned</span>`;
+    } else if(isCurrent){
+      statusHtml = `<span class="mod-status now">this week</span>`;
+    } else {
+      statusHtml = `<span class="mod-status">read</span>`;
+    }
+
+    let bodyHtml = '';
+    if(unlocked && !m.stub){
+      const checked = done ? 'checked' : '';
+      bodyHtml = `
+        <div class="mod-body-inner">
+          <p class="ancestor">${m.ancestor}</p>
+          ${m.body}
+          <div class="creed"><p>"${m.creed}"</p></div>
+          <div class="task-box">
+            <h4>This Week's Rite</h4>
+            ${m.task.map((t,i) => `<label><input type="checkbox" class="task-check" data-mod="${m.num}" data-idx="${i}" ${ (progress[m.num+'_'+i]) ? 'checked' : '' }> ${t}</label>`).join('')}
+          </div>
+          <div class="badge-row">
+            <div class="badge-icon ${done ? 'earned' : ''}">${done ? '★' : '○'}</div>
+            <div class="badge-text">
+              <div class="badge-name">${m.badgeName}</div>
+              <div class="badge-hint">${done ? 'Earned — carry it well.' : m.badgeHint}</div>
+            </div>
+          </div>
+        </div>`;
+    } else if(unlocked && m.stub){
+      bodyHtml = `<div class="mod-body-inner"><p style="padding-top:20px;">Full module content is being finalized and will appear here when this week unlocks live.</p></div>`;
+    } else {
+      bodyHtml = `<div class="locked-msg">This module is sealed until week ${m.num}. Come back once your flame reaches it.</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="mod-head">
+        <span class="mod-num">WEEK ${String(m.num).padStart(2,'0')}</span>
+        <div class="mod-title-wrap">
+          <div class="mod-title">${m.title}</div>
+          <div class="mod-sub">${m.sub}</div>
+        </div>
+        ${statusHtml}
+        ${unlocked ? '<div class="chevron"></div>' : ''}
+      </div>
+      <div class="mod-body">${bodyHtml}</div>
+    `;
+
+    modsEl.appendChild(card);
+
+    if(unlocked){
+      const head = card.querySelector('.mod-head');
+      const body = card.querySelector('.mod-body');
+      head.addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+        card.classList.toggle('open', !isOpen);
+        body.style.maxHeight = !isOpen ? body.scrollHeight + 'px' : '0px';
+      });
+      if(isCurrent){
+        card.classList.add('open');
+        setTimeout(() => { body.style.maxHeight = body.scrollHeight + 'px'; }, 10);
+      }
+    }
+  });
+
+  modsEl.querySelectorAll('.task-check').forEach(cb => {
+    cb.addEventListener('change', (e) => {
+      const modNum = e.target.dataset.mod;
+      const idx = e.target.dataset.idx;
+      const p = getProgress();
+      p[modNum + '_' + idx] = e.target.checked;
+      const mod = MODULES.find(x => x.num == modNum);
+      const allChecked = mod.task.every((_, i) => p[modNum + '_' + i]);
+      p[modNum] = allChecked;
+      setProgress(p);
+      render();
+    });
+  });
+}
+
+document.getElementById('begin-btn').addEventListener('click', () => {
+  setStart(Date.now().toString());
+  render();
+});
+document.getElementById('reset-btn') && document.getElementById('reset-btn').addEventListener('click', () => {
+  if(confirm('Reset start date? This is for testing the prototype only.')){
+    localStorage.removeItem(START_KEY);
+    localStorage.removeItem(PROGRESS_KEY);
+    render();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
