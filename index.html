@@ -790,5 +790,97 @@
     input.click();
   });
 </script>
+<!-- ===== RISE AGENT FLOATING BUTTON + MODAL — paste this block right before the closing </body> tag ===== -->
+<style>
+  #rise-agent-btn {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 9998;
+    background: linear-gradient(135deg, #C9A84C, #D45F2A);
+    color: #0A0A0A;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 22px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(212, 95, 42, 0.45);
+    transition: transform 0.15s;
+  }
+  #rise-agent-btn:hover { transform: scale(1.04); }
+  #rise-agent-btn .flame-icon { font-size: 18px; }
+
+  #rise-agent-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #rise-agent-overlay.open { display: flex; }
+
+  #rise-agent-modal {
+    width: 100%;
+    max-width: 420px;
+    height: 85vh;
+    max-height: 700px;
+    background: #0A0A0A;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  #rise-agent-modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  #rise-agent-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #F0EDE6;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  #rise-agent-close:hover { background: rgba(255,255,255,0.2); }
+
+  @media (max-width: 480px) {
+    #rise-agent-modal { height: 90vh; }
+    #rise-agent-btn span.btn-label { display: none; }
+    #rise-agent-btn { padding: 14px 16px; }
+  }
+</style>
+
+<button id="rise-agent-btn" onclick="document.getElementById('rise-agent-overlay').classList.add('open')">
+  <span class="flame-icon">🔥</span>
+  <span class="btn-label">Ask the Rise Agent</span>
+</button>
+
+<div id="rise-agent-overlay" onclick="if(event.target===this) this.classList.remove('open')">
+  <div id="rise-agent-modal">
+    <button id="rise-agent-close" onclick="document.getElementById('rise-agent-overlay').classList.remove('open')">✕</button>
+    <iframe src="https://masterself216-bot.github.io/masterself-landing/elevators_tier1_agent%20(1).html"></iframe>
+  </div>
+</div>
+<!-- ===== END RISE AGENT EMBED ===== -->
+
 </body>
 </html>
