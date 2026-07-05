@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Self — Elevators Rise Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --black:    #0A0A0A;
+    --deep:     #111318;
+    --panel:    #1A1D24;
+    --border:   #2A2D36;
+    --gold:     #C9A84C;
+    --gold-dim: #8A6F2E;
+    --ember:    #D45F2A;
+    --white:    #F0EDE6;
+    --muted:    #8A8F9E;
+    --user-bg:  #1F2430;
+    --agent-bg: #161920;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Header */
+  .header {
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  .header-text p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .status-dot {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #4CAF7D;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    background: #4CAF7D;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Messages area */
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-track { background: transparent; }
+  .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* Welcome card */
+  .welcome-card {
+    background: linear-gradient(135deg, #1A1A10, #1A1510);
+    border: 1px solid var(--gold-dim);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .welcome-card .flame {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .welcome-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .welcome-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .quick-btn {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .quick-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: #1A1A10;
+  }
+
+  /* Message bubbles */
+  .message {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 88%;
+  }
+
+  .message.user {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+  }
+
+  .message.agent {
+    align-self: flex-start;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .avatar.agent-av {
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    color: var(--black);
+    font-family: 'Cinzel', serif;
+  }
+
+  .avatar.user-av {
+    background: var(--border);
+    color: var(--muted);
+  }
+
+  .bubble {
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 100%;
+  }
+
+  .message.agent .bubble {
+    background: var(--agent-bg);
+    border: 1px solid var(--border);
+    border-top-left-radius: 4px;
+    color: var(--white);
+  }
+
+  .message.user .bubble {
+    background: var(--user-bg);
+    border: 1px solid #2F3545;
+    border-top-right-radius: 4px;
+    color: var(--white);
+  }
+
+  /* Typing indicator */
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 16px;
+  }
+
+  .typing span {
+    width: 7px;
+    height: 7px;
+    background: var(--gold-dim);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* Input area */
+  .input-area {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 16px 20px;
+    flex-shrink: 0;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  textarea {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    resize: none;
+    outline: none;
+    min-height: 44px;
+    max-height: 120px;
+    transition: border-color 0.2s;
+    line-height: 1.5;
+  }
+
+  textarea::placeholder { color: var(--muted); }
+  textarea:focus { border-color: var(--gold-dim); }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--gold), var(--ember));
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .send-btn:hover { opacity: 0.9; transform: scale(1.03); }
+  .send-btn:active { transform: scale(0.97); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .send-btn svg { width: 18px; height: 18px; fill: var(--black); }
+
+  .footer-note {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 8px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Error state */
+  .error-bubble {
+    background: #1A0A0A;
+    border: 1px solid #5A2020;
+    color: #E08080;
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-mark">E</div>
+  <div class="header-text">
+    <h1>ELEVATORS</h1>
+    <p>Master Self Program · Elevators Rise Agent</p>
+  </div>
+  <div class="status-dot">
+    <div class="dot"></div>
+    Live
+  </div>
+</div>
+
+<div class="messages" id="messages">
+  <div class="welcome-card">
+    <div class="flame">🔥</div>
+    <h2>WELCOME, ELEVATOR</h2>
+    <p>I am your Rise Agent — trained in the full Master Self program. Ask me anything about what Tier 1 offers, how to get started, or where this journey takes you.</p>
+    <div class="quick-questions">
+      <button class="quick-btn" onclick="askQuestion('What do I get in Tier 1?')">What do I get in Tier 1?</button>
+      <button class="quick-btn" onclick="askQuestion('How does the workout program work?')">How does the workout work?</button>
+      <button class="quick-btn" onclick="askQuestion('What is the Master Self program?')">What is Master Self?</button>
+      <button class="quick-btn" onclick="askQuestion('Is this for beginners?')">Is this for beginners?</button>
+      <button class="quick-btn" onclick="askQuestion('How do I maintain my condition over the course of my life?')">How do I maintain my condition for life?</button>
+      <button class="quick-btn" onclick="askQuestion('How do I join?')">How do I join?</button>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-row">
+    <textarea
+      id="userInput"
+      placeholder="Ask about the program, workouts, or your journey..."
+      rows="1"
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      </svg>
+    </button>
+  </div>
+  <div class="footer-note">Powered by Master Self · Elevators — Your sovereign wellness movement</div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `You are the Rise Agent for Master Self — a sovereign wellness and consciousness movement. Elevators is the community and training arm of the Master Self program, founded by a man who lost his father to preventable disease at age 18, studied health, fasting, ancient wisdom, and fitness for decades, and built this program to extend the lives of his community.
+
+Your role: Answer questions from prospective and current Tier 1 members. Speak with warmth, authority, and the Elevators voice — direct, motivating, culturally grounded, never preachy.
+
+MASTER SELF PROGRAM OVERVIEW:
+Master Self is a 3-tier transformation system. Elevators is the community of people rising through it:
+- Tier 1 ($10/month): Foundation — fitness videos, weekly newsletter, this Rise Agent
+- Tier 2 ($45/month): The 13-Module Culture of Wellness curriculum (in-depth health education)
+- Tier 3 ($200 one-time): Elevators Evolution — 8 consciousness and sovereignty modules
+
+TIER 1 DETAILS (what you primarily represent):
+Members get:
+1. YouTube video library — 2 introductory videos + 10 core workout videos already available
+2. Foundation exercise routine: jumping jacks, shoulder rotations, standing crunches, bend and reaches, chain breakers, squats, lunges, mountain climbers, high knees, plank holds
+3. For beginners: this IS their full workout
+4. For intermediate/advanced: this is a premium warm-up before their main training
+5. Weekly MailChimp newsletter with guidance, motivation, and next steps on their journey
+6. Access to this Rise Agent for questions, direction, and accountability
+7. Community direction — they are guided week by week to ascend
+
+MAINTAINING YOUR CONDITION OVER THE COURSE OF LIFE:
+This is one of the most important teachings of Master Self. The human body is not a statue — it is a living system that requires consistent maintenance, upgrades, and care across every decade of life. Here is how Elevators approach lifelong condition:
+
+- MOVEMENT: Daily calisthenics, walking, and cardiovascular training keep the heart strong, blood flowing, and joints open at every age. The foundation routine works at 20, 50, and 90.
+- FASTING: Extended fasting resets the body, destroys damaged cells, clears the digestive system, sharpens the mind, and extends lifespan. The founder practices one meal a day and periodic extended fasts.
+- BREATHWORK: 14-second inhale, 12-second exhale — practiced daily — regulates the nervous system, lowers blood pressure, controls emotional reactions, and extends life.
+- HYDRATION: Water is the body's river. Sipping consistently throughout the day keeps blood thin, heart light, and organs clean.
+- NUTRITION: Return to the ancestral plate — whole foods, vegetables, legumes, grains. Move away from the colonial plate of ultra-processed, fried, and chemical-laden foods.
+- EMOTIONAL MASTERY: Stress is a silent killer. Calm is armor. Elevators train their emotional body the same way they train their physical body — with repetition, discipline, and controlled intensity.
+- SLEEP AND REST: The body repairs during rest. Consistent sleep times, no late-night eating, screens off before bed — these preserve the power grid of the body.
+- TELOMERE CARE: Every discipline practiced consistently respects the biological clock. Longevity is craftsmanship — built daily through small, unseen choices that compound over decades.
+- COMMUNITY: You do not elevate alone. A tribe of disciplined, sovereign people preserves the flame and strengthens everyone in it.
+
+The goal: live to 120 years young — moving, thinking, teaching, and thriving. Not surviving. Ascending.
+
+THE ELEVATORS PHILOSOPHY:
+- "We don't just survive — we rise"
+- The body is living equipment requiring maintenance, discipline, and upgrades
+- Longevity is not luck — it is craftsmanship
+- Our people (Black families specifically) are dying too soon from preventable disease — heart attacks, strokes, diabetes — and Master Self exists to reverse that
+- The ancestral plate vs the colonial plate
+- Members earn Badges of Growth as they progress
+
+TONE GUIDELINES:
+- Speak like a knowledgeable elder/coach who has walked this path
+- Use phrases like "Elevator," "rise," "ascend," "your equipment," "the journey," "Master Self"
+- Be direct and real — don't sugarcoat, don't over-complicate
+- Keep answers focused and actionable
+- If someone seems hesitant, motivate them
+- Never be preachy or condescending
+- Always end with a call to action or motivating close when appropriate
+
+If asked about pricing or joining: direct them clearly and encourage them to take the step today.
+If asked health questions: answer from the Master Self curriculum but remind them you are a guidance agent, not a medical doctor.
+Keep responses concise but powerful — this is a conversation, not a lecture.`;
+
+let conversationHistory = [];
+let isLoading = false;
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function askQuestion(q) {
+  document.getElementById('userInput').value = q;
+  sendMessage();
+}
+
+function appendMessage(role, text) {
+  const container = document.getElementById('messages');
+
+  const wrapper = document.createElement('div');
+  wrapper.className = `message ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `avatar ${role === 'agent' ? 'agent-av' : 'user-av'}`;
+  avatar.textContent = role === 'agent' ? 'E' : 'U';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(bubble);
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+  return bubble;
+}
+
+function showTyping() {
+  const container = document.getElementById('messages');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'message agent';
+  wrapper.id = 'typing-indicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar agent-av';
+  avatar.textContent = 'E';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble typing';
+  bubble.innerHTML = '<span></span><span></span><span></span>';
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(bubble);
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  appendMessage('user', text);
+  conversationHistory.push({ role: 'user', content: text });
+
+  showTyping();
+
+  try {
+    const response = await fetch('https://masterself--9723a806775411f1a502607ee4eb77e.web.val.run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await response.json();
+    removeTyping();
+
+    if (data.content && data.content[0]) {
+      const reply = data.content[0].text;
+      appendMessage('agent', reply);
+      conversationHistory.push({ role: 'assistant', content: reply });
+    } else {
+      throw new Error('No response');
+    }
+  } catch (err) {
+    removeTyping();
+    const container = document.getElementById('messages');
+    const errDiv = document.createElement('div');
+    errDiv.className = 'error-bubble';
+    errDiv.textContent = 'The agent is resting. Try again in a moment.';
+    container.appendChild(errDiv);
+    container.scrollTop = container.scrollHeight;
+    conversationHistory.pop();
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+</script>
+</body>
+</html>
