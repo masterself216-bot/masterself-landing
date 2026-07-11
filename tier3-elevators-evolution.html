@@ -22,113 +22,49 @@
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
   }
-  .hero {
-    padding: 80px 24px 60px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .hero h1 {
-    font-size: 2.6rem;
-    margin: 0 0 12px;
-    color: var(--orange-soft);
-    letter-spacing: -0.5px;
-  }
-  .hero p {
-    max-width: 640px;
-    margin: 0 auto;
-    color: var(--text-dim);
-    font-size: 1.05rem;
-  }
+  .hero { padding: 80px 24px 40px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: 2.6rem; margin: 0 0 12px; color: var(--orange-soft); letter-spacing: -0.5px; }
+  .hero p { max-width: 640px; margin: 0 auto; color: var(--text-dim); font-size: 1.05rem; }
   .badge {
-    display: inline-block;
-    background: rgba(224,121,60,0.15);
-    color: var(--orange-soft);
-    border: 1px solid var(--orange);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    display: inline-block; background: rgba(224,121,60,0.15); color: var(--orange-soft);
+    border: 1px solid var(--orange); padding: 4px 14px; border-radius: 20px;
+    font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
   }
-  .container {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 60px 24px;
-  }
-  .intro {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 48px;
-  }
-  .intro h2 {
-    color: var(--orange-soft);
-    margin-top: 0;
-  }
-  .module {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 24px;
-    overflow: hidden;
-    background: var(--panel);
-  }
+  .tracker-wrap { max-width: 780px; margin: 32px auto 0; padding: 0 24px; }
+  .tracker { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+  .tracker-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .tracker-top span:first-child { font-weight: 700; font-size: 0.95rem; }
+  .tracker-count { color: var(--orange-soft); font-weight: 700; }
+  .bar-track { width: 100%; height: 10px; background: #232328; border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange-soft)); width: 0%; transition: width 0.3s ease; border-radius: 6px; }
+  .tracker-hint { color: var(--text-dim); font-size: 0.8rem; margin-top: 10px; }
+  .container { max-width: 780px; margin: 0 auto; padding: 40px 24px 60px; }
+  .intro { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 32px; }
+  .intro h2 { color: var(--orange-soft); margin-top: 0; }
+  .module { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; background: var(--panel); }
   .module-header {
-    padding: 24px 28px;
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    border-bottom: 1px solid var(--border);
+    padding: 22px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer;
+    user-select: none; background: var(--panel); border: none; width: 100%; text-align: left; color: var(--text);
   }
-  .module-number {
-    color: var(--orange);
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
+  .module-header:hover { background: #1c1c21; }
+  .module-number { color: var(--orange); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; white-space: nowrap; }
+  .module-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; flex: 1; }
+  .module-check {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: transparent; transition: all 0.2s ease;
   }
-  .module-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 0;
-  }
-  .module-body {
-    padding: 24px 28px 28px;
-  }
-  .module-body p {
-    color: var(--text-dim);
-    margin: 0 0 14px;
-  }
-  .module-body strong {
-    color: var(--text);
-  }
-  .call-focus {
-    margin-top: 16px;
-    padding: 14px 18px;
-    background: rgba(224,121,60,0.08);
-    border-left: 3px solid var(--orange);
-    border-radius: 4px;
-  }
-  .call-focus p {
-    margin: 0;
-    color: var(--text);
-    font-size: 0.95rem;
-  }
-  .call-focus span {
-    color: var(--orange-soft);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-  }
-  footer {
-    text-align: center;
-    padding: 40px 24px 80px;
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border);
-  }
+  .module-check.checked { background: var(--orange); border-color: var(--orange); color: #0b0b0d; }
+  .chevron { color: var(--text-dim); transition: transform 0.2s ease; flex-shrink: 0; }
+  .module.open .chevron { transform: rotate(180deg); }
+  .module-body-wrap { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .module.open .module-body-wrap { max-height: 600px; }
+  .module-body { padding: 4px 28px 26px; }
+  .module-body p { color: var(--text-dim); margin: 0 0 14px; }
+  .module-body strong { color: var(--text); }
+  .call-focus { margin-top: 12px; padding: 14px 18px; background: rgba(224,121,60,0.08); border-left: 3px solid var(--orange); border-radius: 4px; }
+  .call-focus p { margin: 0; color: var(--text); font-size: 0.95rem; }
+  .call-focus span { color: var(--orange-soft); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+  footer { text-align: center; padding: 40px 24px 80px; color: var(--text-dim); font-size: 0.9rem; border-top: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -137,6 +73,17 @@
   <span class="badge">Tier 3 · Elevators Evolution</span>
   <h1>Your Body and Mind Were Built to Adapt.<br>This Is Where You Prove It.</h1>
   <p>An 8-module foundation, reinforced weekly through two live coaching calls, one personalized meal plan, and one personalized training plan — built to extend how long you live and how fully you live it.</p>
+</div>
+
+<div class="tracker-wrap">
+  <div class="tracker">
+    <div class="tracker-top">
+      <span>Your progress with your coach</span>
+      <span class="tracker-count"><span id="doneCount">0</span> of 8 modules covered</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="tracker-hint">Click a module to expand it. Check it off once you and your coach have covered it live.</div>
+  </div>
 </div>
 
 <div class="container">
@@ -148,124 +95,132 @@
     <p>Nutrition inside this tier leads with two anchors: the brassica vegetable family and a "eat the rainbow" produce rotation — both are woven directly into your weekly meal plan starting in Module 4.</p>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 01</span>
       <h3 class="module-title">The Longevity Baseline</h3>
-    </div>
-    <div class="module-body">
-      <p>Most people chase fitness without ever measuring what actually predicts a long, capable life. Grip strength, VO2 max, resting heart rate, and sleep quality are four of the strongest predictors of both lifespan and healthspan — the years you're not just alive, but capable.</p>
-      <p><strong>The shift:</strong> stop training for how you look this month, and start training the systems that determine how you move at 70, 80, 90.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Your coach establishes your baseline numbers and builds your first four weeks of training and eating around moving each one in the right direction.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Most people chase fitness without ever measuring what actually predicts a long, capable life. Grip strength, VO2 max, resting heart rate, and sleep quality are four of the strongest predictors of both lifespan and healthspan — the years you're not just alive, but capable.</p>
+        <p><strong>The shift:</strong> stop training for how you look this month, and start training the systems that determine how you move at 70, 80, 90.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Your coach establishes your baseline numbers and builds your first four weeks of training and eating around moving each one in the right direction.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 02</span>
       <h3 class="module-title">Strength as Insurance</h3>
-    </div>
-    <div class="module-body">
-      <p>Muscle mass isn't vanity — it's the single most modifiable factor in how independently you'll live in your later decades. Strength training two to three times a week, done consistently for years, is one of the most well-supported interventions in all of exercise science for extending functional life.</p>
-      <p><strong>The shift:</strong> lifting isn't a phase. It's the maintenance plan for the body you'll need in forty years.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Progressive strength programming built around your current ability, adjusted live as you report back week to week.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Muscle mass isn't vanity — it's the single most modifiable factor in how independently you'll live in your later decades. Strength training two to three times a week, done consistently for years, is one of the most well-supported interventions in all of exercise science for extending functional life.</p>
+        <p><strong>The shift:</strong> lifting isn't a phase. It's the maintenance plan for the body you'll need in forty years.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Progressive strength programming built around your current ability, adjusted live as you report back week to week.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 03</span>
       <h3 class="module-title">The Nervous System Runs the Show</h3>
-    </div>
-    <div class="module-body">
-      <p>Chronic stress isn't just a feeling — it's a measurable physiological state that affects inflammation, sleep, digestion, and recovery. Learning to regulate your nervous system through breathwork, controlled exposure to discomfort, and recovery practices isn't soft. It's the difference between training that builds you up and training that breaks you down.</p>
-      <p><strong>The shift:</strong> recovery isn't the absence of effort. It's a skill, trained just like strength.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Breath and recovery protocols built into your weekly plan, not bolted on as an afterthought.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Chronic stress isn't just a feeling — it's a measurable physiological state that affects inflammation, sleep, digestion, and recovery. Learning to regulate your nervous system through breathwork, controlled exposure to discomfort, and recovery practices isn't soft. It's the difference between training that builds you up and training that breaks you down.</p>
+        <p><strong>The shift:</strong> recovery isn't the absence of effort. It's a skill, trained just like strength.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Breath and recovery protocols built into your weekly plan, not bolted on as an afterthought.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 04</span>
       <h3 class="module-title">Eat the Rainbow, Lead with the Brassicas</h3>
-    </div>
-    <div class="module-body">
-      <p>Sustainable nutrition isn't a diet you white-knuckle through. It's understanding what your body actually needs — and building a plate that delivers it, meal after meal, without a fight.</p>
-      <p>Two things anchor this module. First, the <strong>brassica family</strong> — broccoli, cauliflower, Brussels sprouts, cabbage, kale, arugula, bok choy. These vegetables are unusually dense in compounds (glucosinolates, sulforaphane) tied to cellular detoxification and reduced inflammation, alongside high fiber and micronutrient content — making them one of the most researched vegetable groups for long-term health outcomes.</p>
-      <p>Second, <strong>eating the rainbow</strong> — deliberately rotating produce color (dark greens, reds, oranges, purples, whites) across the week. Color in produce roughly tracks with different families of antioxidants and phytonutrients, so variety in color is a simple, practical way to cover a wider nutritional base than any single "superfood" ever could.</p>
-      <p><strong>The shift:</strong> the goal isn't perfect eating. It's a plate that leads with brassicas and rotates color all week — a plan you can still be following in five years.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Your personalized weekly meal plan is built from this module — a brassica serving built into most days, and a rainbow rotation mapped across the week — then adjusted as your training load and goals shift.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Sustainable nutrition isn't a diet you white-knuckle through. It's understanding what your body actually needs — and building a plate that delivers it, meal after meal, without a fight.</p>
+        <p>Two things anchor this module. First, the <strong>brassica family</strong> — broccoli, cauliflower, Brussels sprouts, cabbage, kale, arugula, bok choy. These vegetables are unusually dense in compounds tied to cellular detoxification and reduced inflammation, alongside high fiber and micronutrient content.</p>
+        <p>Second, <strong>eating the rainbow</strong> — deliberately rotating produce color across the week. Color roughly tracks with different families of antioxidants and phytonutrients, so variety in color is a simple, practical way to cover a wider nutritional base than any single "superfood" ever could.</p>
+        <p><strong>The shift:</strong> the goal isn't perfect eating. It's a plate that leads with brassicas and rotates color all week — a plan you can still be following in five years.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Your personalized weekly meal plan is built from this module — a brassica serving built into most days, and a rainbow rotation mapped across the week — then adjusted as your training load and goals shift.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 05</span>
       <h3 class="module-title">Sleep Is Where the Work Actually Happens</h3>
-    </div>
-    <div class="module-body">
-      <p>Training breaks the body down. Sleep is where it rebuilds — muscle repair, memory consolidation, hormone regulation, and immune function all depend on consistent, quality sleep. Poor sleep quietly undoes a huge percentage of the progress people think they're losing in the gym or kitchen.</p>
-      <p><strong>The shift:</strong> treat your sleep schedule with the same discipline you treat your training schedule.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Sleep tracking and adjustment becomes part of your weekly check-in, not an afterthought question.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Training breaks the body down. Sleep is where it rebuilds — muscle repair, memory consolidation, hormone regulation, and immune function all depend on consistent, quality sleep. Poor sleep quietly undoes a huge percentage of the progress people think they're losing in the gym or kitchen.</p>
+        <p><strong>The shift:</strong> treat your sleep schedule with the same discipline you treat your training schedule.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Sleep tracking and adjustment becomes part of your weekly check-in, not an afterthought question.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 06</span>
       <h3 class="module-title">Mental Capacity Is Trainable</h3>
-    </div>
-    <div class="module-body">
-      <p>Focus, discipline, and emotional regulation aren't fixed traits — they're skills built through deliberate practice, the same way a muscle is built through resistance. Voluntary discomfort (hard workouts, cold exposure, fasting windows, disciplined routines) trains your capacity to stay steady when things get uncomfortable — in training and in life.</p>
-      <p><strong>The shift:</strong> every hard rep is also a rep for your mind. You're building the same muscle twice.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Coaches build in structured challenge points designed to stretch your mental capacity alongside your physical one.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Focus, discipline, and emotional regulation aren't fixed traits — they're skills built through deliberate practice, the same way a muscle is built through resistance. Voluntary discomfort (hard workouts, cold exposure, fasting windows, disciplined routines) trains your capacity to stay steady when things get uncomfortable — in training and in life.</p>
+        <p><strong>The shift:</strong> every hard rep is also a rep for your mind. You're building the same muscle twice.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Coaches build in structured challenge points designed to stretch your mental capacity alongside your physical one.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 07</span>
       <h3 class="module-title">Community as a Performance Tool</h3>
-    </div>
-    <div class="module-body">
-      <p>Social connection is one of the most consistently underrated predictors of long-term health outcomes — on par with not smoking, in some longevity research. Isolation quietly erodes both mental and physical health over time. Showing up for live calls, being seen, being accountable to real people — this isn't a soft feature of MasterSelf. It's part of the mechanism.</p>
-      <p><strong>The shift:</strong> your two weekly calls aren't a check-in. They're a longevity intervention.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Calls are built around real conversation and accountability — not just a script read at you.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>Social connection is one of the most consistently underrated predictors of long-term health outcomes — on par with not smoking, in some longevity research. Isolation quietly erodes both mental and physical health over time. Showing up for live calls, being seen, being accountable to real people — this isn't a soft feature of MasterSelf. It's part of the mechanism.</p>
+        <p><strong>The shift:</strong> your two weekly calls aren't a check-in. They're a longevity intervention.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Calls are built around real conversation and accountability — not just a script read at you.</p></div>
       </div>
     </div>
   </div>
 
-  <div class="module">
-    <div class="module-header">
+  <div class="module" data-module>
+    <button class="module-header" data-toggle>
       <span class="module-number">MODULE 08</span>
       <h3 class="module-title">The Long Game</h3>
-    </div>
-    <div class="module-body">
-      <p>None of the previous seven modules matter if they aren't sustained. The people who actually extend their healthy years aren't the ones who trained hardest for six months — they're the ones who kept showing up for fifteen years. Evolution, in the MasterSelf sense, is compounding — small, consistent, well-directed effort stacked over a long time horizon.</p>
-      <p><strong>The shift:</strong> you're not signing up for a program. You're building a decades-long practice, starting now.</p>
-      <div class="call-focus">
-        <span>Call Focus</span>
-        <p>Long-term planning check-ins, revisiting your baseline numbers from Module 1 to track real, measurable change over time.</p>
+      <span class="module-check" data-check>✓</span>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="module-body-wrap">
+      <div class="module-body">
+        <p>None of the previous seven modules matter if they aren't sustained. The people who actually extend their healthy years aren't the ones who trained hardest for six months — they're the ones who kept showing up for fifteen years. Evolution, in the MasterSelf sense, is compounding — small, consistent, well-directed effort stacked over a long time horizon.</p>
+        <p><strong>The shift:</strong> you're not signing up for a program. You're building a decades-long practice, starting now.</p>
+        <div class="call-focus"><span>Call Focus</span><p>Long-term planning check-ins, revisiting your baseline numbers from Module 1 to track real, measurable change over time.</p></div>
       </div>
     </div>
   </div>
@@ -276,6 +231,54 @@
   Elevators Evolution · Tier 3 · MasterSelf<br>
   Capped at 10 members · Personalized coaching, meal plans, and training plans delivered weekly
 </footer>
+
+<script>
+  const modules = document.querySelectorAll('[data-module]');
+  const doneCountEl = document.getElementById('doneCount');
+  const barFillEl = document.getElementById('barFill');
+  const STORAGE_KEY = 'masterself_tier3_progress';
+
+  function loadProgress() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch(e) { return {}; }
+  }
+  function saveProgress(data) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+  }
+
+  let progress = loadProgress();
+
+  function updateTracker() {
+    const checks = document.querySelectorAll('[data-check]');
+    let done = 0;
+    checks.forEach(c => { if (c.classList.contains('checked')) done++; });
+    doneCountEl.textContent = done;
+    barFillEl.style.width = (done / checks.length * 100) + '%';
+  }
+
+  modules.forEach((mod, i) => {
+    const toggleBtn = mod.querySelector('[data-toggle]');
+    const checkEl = mod.querySelector('[data-check]');
+    const key = 'module' + i;
+
+    if (progress[key]) checkEl.classList.add('checked');
+
+    toggleBtn.addEventListener('click', (e) => {
+      if (e.target === checkEl) return;
+      mod.classList.toggle('open');
+    });
+
+    checkEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      checkEl.classList.toggle('checked');
+      progress[key] = checkEl.classList.contains('checked');
+      saveProgress(progress);
+      updateTracker();
+    });
+  });
+
+  updateTracker();
+</script>
 
 </body>
 </html>
