@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Self — Produce Field Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --black:   #080808;
+    --deep:    #0E0E12;
+    --panel:   #141418;
+    --border:  #242428;
+    --gold:    #C9A84C;
+    --gold2:   #E8C96A;
+    --ember:   #D45F2A;
+    --white:   #F0EDE6;
+    --muted:   #888899;
+    --green:   #4CAF7D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 24px 100px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  h1 .gold { color: var(--gold); }
+  h1 .ember { color: var(--ember); }
+
+  .intro {
+    text-align: center;
+    color: #BCBAC8;
+    max-width: 620px;
+    margin: 0 auto 60px;
+    font-size: 16px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--ember));
+    margin: 0 auto 48px;
+    border-radius: 1px;
+  }
+
+  section {
+    margin-bottom: 72px;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  /* BRASSICA GRID */
+  .brassica-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .brassica-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 18px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .brassica-card:hover { border-color: var(--gold); }
+
+  .brassica-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .brassica-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .brassica-card p {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* RAINBOW CHART */
+  .rainbow-row {
+    display: flex;
+    align-items: stretch;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .rainbow-swatch {
+    width: 14px;
+    flex-shrink: 0;
+  }
+
+  .rainbow-content {
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .rainbow-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .rainbow-examples {
+    font-size: 13.5px;
+    color: #BCBAC8;
+  }
+
+  .rainbow-examples strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .rainbow-benefit {
+    font-size: 13.5px;
+    color: #BCBAC8;
+  }
+
+  .rainbow-benefit strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  /* WEEKLY ROTATION */
+  .rotation-note {
+    background: linear-gradient(160deg, #1A1A10, #141410);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 28px 30px;
+    text-align: center;
+  }
+
+  .rotation-note p {
+    color: #BCBAC8;
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .rotation-note strong { color: var(--white); }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer span { color: var(--gold); }
+
+  @media print {
+    body { background: white; color: #111; }
+    .brassica-card, .rainbow-row, .rotation-note { border-color: #ccc; background: #fafafa; }
+    .rainbow-content { color: #111; }
+  }
+
+  @media (max-width: 640px) {
+    .rainbow-content {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="eyebrow">Tier 3 · Elevators Evolution</div>
+  <h1>The <span class="gold">Produce</span> Field Guide</h1>
+  <p class="intro">
+    Two simple tools for your weekly plate: the brassica family — your metabolic and hormonal reset button —
+    and the full-color rainbow rotation your coach references when building your meal plan.
+  </p>
+  <div class="divider"></div>
+
+  <!-- BRASSICA -->
+  <section>
+    <div class="section-title">The Brassica Family</div>
+    <p class="section-sub">Cruciferous vegetables. Aim for at least one serving daily — raw, steamed, or roasted.</p>
+
+    <div class="brassica-grid">
+      <div class="brassica-card">
+        <div class="brassica-icon">🥦</div>
+        <h3>Broccoli</h3>
+        <p>Sulforaphane for detox support & cellular defense.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🥬</div>
+        <h3>Kale</h3>
+        <p>Dense in calcium, vitamin K, and lutein for eye health.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🧅</div>
+        <h3>Cabbage</h3>
+        <p>Gut-friendly fiber and natural anti-inflammatory compounds.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🌱</div>
+        <h3>Brussels Sprouts</h3>
+        <p>High protein-per-calorie for a vegetable, plus fiber.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🥦</div>
+        <h3>Cauliflower</h3>
+        <p>Low-carb bulk, choline for brain and liver function.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🌿</div>
+        <h3>Bok Choy</h3>
+        <p>Light, hydrating, easy to digest — great for evening meals.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🔴</div>
+        <h3>Radish</h3>
+        <p>Sharp, digestion-supportive, mineral-rich in small doses.</p>
+      </div>
+      <div class="brassica-card">
+        <div class="brassica-icon">🥗</div>
+        <h3>Arugula</h3>
+        <p>Nitrates for blood flow and cardiovascular support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAINBOW -->
+  <section>
+    <div class="section-title">Eat the Rainbow — Weekly Rotation</div>
+    <p class="section-sub">Each color group carries a distinct set of protective compounds. Rotate through all five across the week.</p>
+
+    <div class="rainbow-row">
+      <div class="rainbow-swatch" style="background:#D9483A;"></div>
+      <div class="rainbow-content">
+        <div class="rainbow-label" style="color:#D9483A;">Red</div>
+        <div class="rainbow-examples"><strong>Examples</strong>Tomatoes, red peppers, strawberries, watermelon</div>
+        <div class="rainbow-benefit"><strong>Supports</strong>Heart health, blood flow, lycopene protection</div>
+      </div>
+    </div>
+
+    <div class="rainbow-row">
+      <div class="rainbow-swatch" style="background:#E39A2E;"></div>
+      <div class="rainbow-content">
+        <div class="rainbow-label" style="color:#E39A2E;">Orange & Yellow</div>
+        <div class="rainbow-examples"><strong>Examples</strong>Carrots, sweet potato, squash, mango, citrus</div>
+        <div class="rainbow-benefit"><strong>Supports</strong>Vision, immune defense, skin repair</div>
+      </div>
+    </div>
+
+    <div class="rainbow-row">
+      <div class="rainbow-swatch" style="background:var(--green);"></div>
+      <div class="rainbow-content">
+        <div class="rainbow-label" style="color:var(--green);">Green</div>
+        <div class="rainbow-examples"><strong>Examples</strong>Spinach, kale, broccoli, green beans, avocado</div>
+        <div class="rainbow-benefit"><strong>Supports</strong>Detox pathways, folate, cellular repair</div>
+      </div>
+    </div>
+
+    <div class="rainbow-row">
+      <div class="rainbow-swatch" style="background:#6E5AC4;"></div>
+      <div class="rainbow-content">
+        <div class="rainbow-label" style="color:#8B7BD8;">Blue & Purple</div>
+        <div class="rainbow-examples"><strong>Examples</strong>Blueberries, blackberries, purple cabbage, eggplant</div>
+        <div class="rainbow-benefit"><strong>Supports</strong>Brain function, memory, anti-aging compounds</div>
+      </div>
+    </div>
+
+    <div class="rainbow-row">
+      <div class="rainbow-swatch" style="background:#D8D3C4;"></div>
+      <div class="rainbow-content">
+        <div class="rainbow-label" style="color:#D8D3C4;">White & Tan</div>
+        <div class="rainbow-examples"><strong>Examples</strong>Garlic, onion, mushroom, cauliflower, ginger</div>
+        <div class="rainbow-benefit"><strong>Supports</strong>Immune signaling, circulation, gut microbiome</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROTATION NOTE -->
+  <div class="rotation-note">
+    <p>
+      <strong>Target for the week:</strong> touch every color at least twice, and include one brassica serving daily.
+      Your coach will reference this guide directly when building your personalized weekly meal plan —
+      no need to track it perfectly on your own.
+    </p>
+  </div>
+
+  <footer>
+    <p>© 2026 <span>Master Self · Elevators Evolution</span> — Eat the rainbow. Rise on schedule.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
